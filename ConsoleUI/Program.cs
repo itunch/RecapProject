@@ -3,17 +3,66 @@ using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 
+CarAdd();
+//CarTest();
+//CarList();
 
-CarManager carManager = new CarManager(new EfCarDal());
-
-
-Car car = new Car {BrandId=3,CarName="Tesla",ColorId=1,DailyPrice=0,Description="Bu nasıl araba",ModelYear=2000 };
-carManager.Add(car);
-
-
-
-
-foreach (var car2 in carManager.GetAll())
+static void CarList()
 {
-    Console.WriteLine(car2.CarName+""+car2.Description+" "+car2.ModelYear);
+    CarManager carManager = new CarManager(new EfCarDal());
+    var cars = carManager.GetAll();
+    if (cars.Success)
+    {
+        foreach (var car in cars.Data)
+        {
+            Console.WriteLine(car.ModelYear + "-" + car.CarName + "-" + car.DailyPrice);
+            
+        }
+        Console.WriteLine(cars.Message);
+    }
+    else
+    {
+        Console.WriteLine(cars.Message);
+    }
+}
+
+
+static void CarTest()
+{
+    CarManager carManager = new CarManager(new EfCarDal());
+    var result = carManager.GetCarDetails();
+    if (result.Success)
+    {
+        foreach (var item in result.Data)
+        {
+            Console.WriteLine(item.BrandName + "/" + item.CarName + "/" + item.ColorName + "/" + item.DailyPrice);
+        }
+    }
+    else
+    {
+        Console.WriteLine(result.Message);
+    }
+}
+
+static CarManager CarAdd()
+{
+    CarManager carManager = new CarManager(new EfCarDal());
+
+
+    Car car = new Car { BrandId = 3, CarName = "Ayt", ColorId = 2, DailyPrice = 36, Description = "Bu nasıl araba", ModelYear = 2077 };
+    var result=carManager.Add(car);
+    if(result.Success)
+    {
+        Console.WriteLine(result.Message);
+        CarList();
+        
+    }    
+    else
+    {
+        Console.WriteLine(result.Message);
+
+    }
+
+    return carManager;
+
 }
