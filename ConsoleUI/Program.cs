@@ -3,9 +3,22 @@ using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 
-CarAdd();
+//CarAdd();
 //CarTest();
 //CarList();
+RentTest();
+static void RentTest()
+{
+    RentalManager rentalManager = new RentalManager(new EfRentalDal());
+    Rental rental = new Rental { CarId = 5, CustomerId = 1, RentDate = DateTime.Now };
+    rentalManager.Add(rental);
+
+    foreach (var rentals in rentalManager.GetAll().Data)
+    {
+        Console.WriteLine(rentals.Id + "/" + rentals.CarId + "/" + rentals.CustomerId + "/" + rentals.RentDate + "/" + rentals.ReturnDate.ToString()); ;
+    }
+    
+}
 
 static void CarList()
 {
