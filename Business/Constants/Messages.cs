@@ -44,7 +44,11 @@ namespace Business.Constants
         public static string RentalListed = "Rental listelendi";
         public static string RentalNameInvalid = "Rental adı geçersiz";
 
+<<<<<<< HEAD
         public static string CarIsNotAvailable = "Araç şu an kirada.";
+=======
+
+>>>>>>> 4977b0e516147e61e8f7f8cb688d9acc09651d4c
 
 
 
