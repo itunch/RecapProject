@@ -11,7 +11,6 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfRentalDal:EfEntityRepositoryBase<Rental,ReCapDBContext>, IRentalDal
     {
-<<<<<<< HEAD
         public Rental GetRentedCar(int carId)
         {
             using (ReCapDBContext context = new ReCapDBContext())
@@ -20,7 +19,5 @@ namespace DataAccess.Concrete.EntityFramework
                 return result.SingleOrDefault();
             }
         }
-=======
->>>>>>> 4977b0e516147e61e8f7f8cb688d9acc09651d4c
     }
 }

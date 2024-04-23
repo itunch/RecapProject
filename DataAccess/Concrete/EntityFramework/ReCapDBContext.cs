@@ -20,12 +20,6 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<User> Users { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Rental> Rentals { get; set; }
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 4977b0e516147e61e8f7f8cb688d9acc09651d4c
 
 
     }
