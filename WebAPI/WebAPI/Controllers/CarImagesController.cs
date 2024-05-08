@@ -60,8 +60,8 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpPost("delete")]
-        public IActionResult Delete(CarImage carImage)
+        [HttpDelete("delete")]
+        public IActionResult Delete([FromForm]CarImage carImage)
         {
             var carImageDeleteTemp=_carImageService.GetImageById(carImage.CarId).Data;
             var result = _carImageService.Delete(carImageDeleteTemp);
