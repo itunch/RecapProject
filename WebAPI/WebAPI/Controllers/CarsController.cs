@@ -4,6 +4,7 @@ using Entities.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
@@ -19,6 +20,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getall")]
+        [Authorize(Roles ="Car.List")]
         public IActionResult GetAll()
         {
             var result = _carService.GetAll();

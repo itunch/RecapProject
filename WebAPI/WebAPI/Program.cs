@@ -5,12 +5,49 @@ using Business.Concrete;
 using Business.DependecyResolvers.Autofac;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Core.Utilities.Security.JWT;
+using Core.Utilities.Security.Encryption;
+using Core.Utilities.IoC;
+
+var AllowOrigins = "_allowOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: AllowOrigins,
+    policy =>
+    {
+        policy.WithOrigins("http://localhost:3000");
+    });
+});
+
+var tokenOptions = builder.Configuration.GetSection(key: "TokenOptions").Get<TokenOptions>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidIssuer = tokenOptions.Issuer,
+            ValidAudience = tokenOptions.Audience,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
+        };
+    });
+ServiceTool.Create(builder.Services);
+//ServiceTool.Create(builder.Services);
 
 //builder.Services.AddSingleton<ICarService,CarManager>();
 //builder.Services.AddSingleton<ICarDal,EfCarDal>();
@@ -51,6 +88,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(AllowOrigins);
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

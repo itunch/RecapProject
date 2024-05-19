@@ -4,6 +4,8 @@ using Color = Entities.Concrete.Color;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Drawing;
+using Business.BusinessAspects;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
@@ -18,7 +20,8 @@ namespace WebAPI.Controllers
             _colorService = colorService;
         }
 
-        [HttpGet("getall")]
+        [Authorize(Roles ="Color,Admin")]
+        [HttpGet("getall")]        
         public IActionResult GetAll()
         {
             var result = _colorService.GetAll();
