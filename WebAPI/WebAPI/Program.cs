@@ -10,6 +10,9 @@ using Microsoft.IdentityModel.Tokens;
 using Core.Utilities.Security.JWT;
 using Core.Utilities.Security.Encryption;
 using Core.Utilities.IoC;
+using Core.DependencyResolvers;
+using Microsoft.Extensions.DependencyInjection;
+using Core.Extensions;
 
 var AllowOrigins = "_allowOrigins";
 
@@ -46,7 +49,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
         };
     });
-ServiceTool.Create(builder.Services);
+
+
+
+builder.Services.AddDependencyResolvers(new ICoreModule[]
+{
+    new CoreModule()
+});
+
+
 //ServiceTool.Create(builder.Services);
 
 //builder.Services.AddSingleton<ICarService,CarManager>();
