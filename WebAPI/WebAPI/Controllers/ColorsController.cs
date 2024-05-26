@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
             _colorService = colorService;
         }
 
-        [Authorize(Roles ="Color,Admin")]
+        //[Authorize(Roles ="Color,Admin")]
         [HttpGet("getall")]        
         public IActionResult GetAll()
         {

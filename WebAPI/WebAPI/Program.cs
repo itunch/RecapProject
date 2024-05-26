@@ -100,7 +100,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors(AllowOrigins);
+app.UseCors(builder=>builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 
 app.UseAuthentication();
 
